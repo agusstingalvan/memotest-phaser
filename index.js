@@ -31,11 +31,12 @@ function preload(){
 }
 function create(){
     for(let j = 1; j <= 2; j++){
-        for(let i = 1; i <= 5; i++){
+        for(let i = 1; i <= 6; i++){
             const carta = this.add.image(null, null,'duda')
             carta.setInteractive();
             carta.type = i;
             carta.estaVolteada = false;
+            carta.setOrigin(0.5);
             masoCartas.push(carta);
 
             
@@ -82,9 +83,14 @@ function create(){
         }
     }
     Phaser.Utils.Array.Shuffle(masoCartas);
-    masoCartas.forEach((elemento, index) => {
-        elemento.setPosition((index % 5) * 64 + (232), Math.floor(index / 5) * 64 + (this.scale.height / 2));
-    })
+    Phaser.Actions.GridAlign(masoCartas, {
+        width: 4,
+        height: 3,
+        cellWidth: 64,
+        cellHeight: 64,
+        x: (this.scale.width - (4 * 64)) / 2,
+        y: (this.scale.height - (3 * 64)) / 2,
+    });
 }
 function update(){
     if(masoCartas.length === cartasSeleccionadas.length){
